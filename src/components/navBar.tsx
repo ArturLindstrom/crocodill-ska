@@ -2,19 +2,20 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
-  // navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLoaderData } from "react-router-dom";
 import ThemeToggle from "./themes/themeToggle";
+import { Preschool } from "@/types";
 
 const NavBar = () => {
+  const { data } = useLoaderData() as { data: Preschool[] };
+
   return (
     <div className="flex items-center justify-between pr-4">
       <NavigationMenu>
@@ -23,16 +24,13 @@ const NavBar = () => {
             <NavigationMenuTrigger>Förskolor</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="p-4 md:w-[200px] lg:w-[300px] lg:grid-cols-[.75fr_1fr] ">
-                <ListItem href="/förskolor/ilcrocodill" title="Il Crocodill" />
-                <ListItem
-                  href="/förskolor/entillcrocodill"
-                  title="Entill Crocodill"
-                />
-                <ListItem
-                  href="/förskolor/lillcrocodill"
-                  title="Lill Crocodill"
-                />
-                <ListItem href="förskolor/afcrocodill" title="Af Crocodill" />
+                {data.map((preschool: Preschool) => (
+                  <ListItem
+                    key={preschool.preschool_id}
+                    href={`/förskolor/${preschool.preschool_id}`}
+                    title={preschool.name}
+                  ></ListItem>
+                ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
