@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import BarChartCard from "@/components/chart/barChart";
 import PieChartCard from "@/components/chart/pieChart";
 import PreschoolDataForm from "@/components/forms/preschoolDataForm";
 import DocumentationTable from "@/components/table/documentationTable";
@@ -8,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { DocumentationWithTeacher } from "@/types";
 import { useParams } from "react-router-dom";
 import { usePreschoolData } from "@/api/preschools";
+import TermChart from "@/components/chart/termChart";
 
 const PreschoolLayout = () => {
   const [filteredDocumentations, setFilteredDocumentations] = useState<
@@ -49,7 +49,7 @@ const PreschoolLayout = () => {
       </div>
 
       <Card className="grid w-5/6 grid-cols-2 p-4">
-        <BarChartCard
+        <TermChart
           countByMonth={countByMonth || {}}
           term={terms[0].term_name || ""}
         />
