@@ -18,9 +18,8 @@ export type PreschoolLoader = {
   documentations: DocumentationWithTeacher[];
 };
 
-// Assuming Documentation is defined and teachers are fetched with each documentation
 export interface DocumentationWithTeacher extends Documentation {
   teachers: {
-    name: string; // Or other relevant fields you fetch from the teachers table
-  };
+    name: string;
+  } | null;
 }
