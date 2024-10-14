@@ -1,43 +1,58 @@
-import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
 import BarChartCard from "@/components/chart/barChart";
 import PieChartCard from "@/components/chart/pieChart";
 import PreschoolDataForm from "@/components/forms/preschoolDataForm";
 import DocumentationTable from "@/components/table/documentationTable";
 import Heading from "@/components/typography/headings";
 import { Card } from "@/components/ui/card";
-import { DocumentationWithTeacher, PreschoolLoader } from "@/types";
+import { DocumentationWithTeacher } from "@/types";
+import { useParams } from "react-router-dom";
+import { usePreschoolData } from "@/api/preschools";
 
 const PreschoolLayout = () => {
   const [filteredDocumentations, setFilteredDocumentations] = useState<
     DocumentationWithTeacher[]
   >([]);
-  const { preschool, terms, departments, months, documentations } =
-    useLoaderData() as PreschoolLoader;
+  const { id } = useParams();
 
-  // Use useEffect to set the filteredDocumentations initially to the documentations from the loader
+  const { data, isLoading, error } = usePreschoolData(id);
+
   useEffect(() => {
-    setFilteredDocumentations(documentations);
-  }, [documentations]);
+    if (data?.documentations) {
+      setFilteredDocumentations(data.documentations);
+    }
+  }, [data]);
 
-  const handleDocumentationsFetch = (data: DocumentationWithTeacher[]) => {
-    setFilteredDocumentations(data);
-  };
+  const handleDocumentationsFetch = useCallback(
+    (docs: DocumentationWithTeacher[]) => {
+      setFilteredDocumentations(docs);
+    },
+    []
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching data: {(error as Error).message}</div>;
+  if (!data) return <div>No data found.</div>;
+
+  const { preschool, departments, terms, months, countByMonth } = data;
 
   return (
     <>
       <div className="flex flex-col items-center gap-4 p-4">
-        <Heading.H1>{preschool.name}</Heading.H1>
+        <Heading.H1>{preschool?.name || "Unknown Preschool"}</Heading.H1>{" "}
         <PreschoolDataForm
-          departments={departments}
+          departments={departments || []}
           terms={terms}
-          months={months}
+          months={months || []}
           onDocumentationsFetch={handleDocumentationsFetch}
         />
       </div>
 
       <Card className="grid w-5/6 grid-cols-2 p-4">
-        <BarChartCard />
+        <BarChartCard
+          countByMonth={countByMonth || {}}
+          term={terms[0].term_name || ""}
+        />
         <PieChartCard />
         <DocumentationTable documentations={filteredDocumentations} />
       </Card>
