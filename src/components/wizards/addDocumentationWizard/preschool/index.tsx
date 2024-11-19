@@ -1,7 +1,7 @@
-import { useAllPreschools } from "@/api/preschools";
 import { useDocumentationStore } from "@/store/documentations";
 import Loader from "@/components/loader";
 import AddPreschoolForm from "./addPreschoolForm";
+import { useAllPreschools } from "@/api/preschools/preschoolQueries";
 
 type AddPreschoolProps = {
   nextStep: () => void;

@@ -1,12 +1,12 @@
-import {
-  useGetAreas,
-  useGetCriteriasByAreaId,
-} from "@/api/documentations/queries";
 import AddCriteriasForm from "./addCriteriasForm";
 import Loader from "@/components/loader";
 import AreaSelector from "./areaSelector";
 import { useState } from "react";
 import { useDocumentationStore } from "@/store/documentations";
+import {
+  useGetAreas,
+  useGetCriteriasByAreaId,
+} from "@/api/documentations/queries/hooks";
 
 type AddCriteriasProps = {
   nextStep: () => void;

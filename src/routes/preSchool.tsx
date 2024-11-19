@@ -1,4 +1,4 @@
-import { usePreschoolData } from "@/api/preschools";
+import { usePreschoolData } from "@/api/preschools/preschoolQueries";
 import PieChartCard from "@/components/chart/pieChart";
 import TermChart from "@/components/chart/termChart";
 import PreschoolDataForm from "@/components/forms/preschoolDataForm";
