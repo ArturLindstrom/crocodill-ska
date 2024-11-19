@@ -3,7 +3,7 @@ import { Department, DocumentationWithTeacher, Month, Term } from "@/types";
 import CheckboxWithText from "@/components/checkbox";
 import Combobox from "@/components/comboBox";
 import { transformMonths, transformTerms } from "@/helpers";
-import { getDocumentationsByTermMonthAndDepartment } from "@/api/documentations";
+import { getDocumentationsByTermMonthAndDepartment } from "@/api/documentations/queries";
 import { Button } from "../ui/button";
 import * as yup from "yup";
 import { useLocation } from "react-router-dom";
