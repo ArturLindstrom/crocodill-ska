@@ -5,7 +5,7 @@ type TextProps = HTMLProps<HTMLHeadingElement>;
 const H1 = ({ children, className }: TextProps) => {
   return (
     <h1
-      className={`text-4xl font-extrabold tracking-tight scroll-m-20 lg:text-5xl ${className}`}
+      className={`text-4xl font-extrabold tracking-tight scroll-m-20 lg:text-5xl pt-4 ${className}`}
     >
       {children}
     </h1>
