@@ -1,14 +1,17 @@
 // api/preSchools.ts
 
 import { supabase } from "@/api/supabaseClient";
-import { getAllMonths } from "../months";
-import { getAllTerms } from "../terms";
+import { getTermsWithMonths } from "../terms";
 import { useQuery } from "@tanstack/react-query";
-import { getDocumentationsByPreschoolTermAndMonth } from "../documentations";
+import { getDocumentationsByPreschoolTermAndMonth } from "../documentations/queries";
+import { Department, Preschool } from "@/types";
 
 export const getAllPreschools = async () => {
-  const { data, error } = await supabase.from("preschools").select();
-  return { data, error }; // Return both data and error
+  const { data, error } = await supabase.from("preschools").select(`
+      *,
+      departments (*)
+    `);
+  return { data, error };
 };
 
 export const getPreschoolAndDepartmentsById = async (preschoolId: string) => {
@@ -28,23 +31,28 @@ export const getPreschoolAndDepartmentsById = async (preschoolId: string) => {
 
 export const preschoolLoader = async (id: string) => {
   const { preschool, departments } = await getPreschoolAndDepartmentsById(id);
-  const { terms } = await getAllTerms();
-  const { months } = await getAllMonths();
+  const { data: termsData } = await getTermsWithMonths();
 
-  if (!terms || terms.length === 0) {
+  if (!termsData || termsData.length === 0) {
     throw new Error("No terms found");
   }
 
+  // Extract unique months from termsData
+  const months = termsData
+    .flatMap((term) => term.month_term)
+    .map((mt) => mt.months)
+    .filter((month): month is NonNullable<typeof month> => month !== null);
+
   const { documentations, countByMonth } =
     await getDocumentationsByPreschoolTermAndMonth({
-      termId: terms[0].term_id.toString(),
+      termId: termsData[0].term_id.toString(),
       preschoolId: id,
     });
 
   return {
     preschool,
     departments,
-    terms,
+    terms: termsData,
     months,
     documentations,
     countByMonth,
@@ -56,5 +64,16 @@ export const usePreschoolData = (id: string | undefined) => {
     queryKey: ["preschoolData", id],
     queryFn: () => preschoolLoader(id as string),
     enabled: !!id,
+  });
+};
+
+export const useAllPreschools = () => {
+  return useQuery({
+    queryKey: ["preschools"],
+    queryFn: async () => {
+      const { data, error } = await getAllPreschools();
+      if (error) throw error;
+      return data as (Preschool & { departments: Department[] })[];
+    },
   });
 };
