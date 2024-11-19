@@ -39,7 +39,9 @@ const DocumentationTable = ({ documentations }: DocumentationTableProps) => {
                     {documentation.created_at?.slice(0, 10)}
                   </TableCell>
                   <TableCell>
-                    <Link to={""}>{documentation.teachers.name}</Link>
+                    <Link to={""}>
+                      {documentation.teachers?.name || "Ingen pedagog"}
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))

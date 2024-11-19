@@ -1,15 +1,20 @@
-import { supabase } from "@/api/supabaseClient";
+import { supabase } from "../supabaseClient";
 
-export const getAllTerms = async () => {
-  const { data: terms, error } = await supabase
+export const getTermsWithMonths = async () => {
+  const { data, error } = await supabase
     .from("terms")
-    .select()
+    .select(
+      `
+      *,
+      month_term!inner (
+        months (*)
+      )
+    `
+    )
     .order("term_id", { ascending: true });
 
-  if (error) {
-    console.error("Error fetching terms:", error);
-    return { terms: null, error };
-  }
-
-  return { terms, error: null };
+  return {
+    data,
+    error,
+  };
 };

@@ -1,12 +1,11 @@
-import { supabase } from "../supabaseClient";
+import { DocumentationWithTeacher } from "@/types";
+import { supabase } from "../../supabaseClient";
 
 type GetDocumentationsByTermMonthAndDepartmentProps = {
   selectedTermId: string;
   selectedMonthId: string;
   selectedDepartments: number[];
 };
-
-import { DocumentationWithTeacher } from "@/types";
 
 // Function to fetch documentations along with teacher's data based on term, month, and departments
 export const getDocumentationsByTermMonthAndDepartment = async ({
@@ -69,4 +68,31 @@ export const getDocumentationsByPreschoolTermAndMonth = async ({
   );
 
   return { documentations, countByMonth, error: null };
+};
+
+export const getAreas = async () => {
+  const { data, error } = await supabase.from("areas").select("*");
+
+  if (error) {
+    console.error("Error fetching areas:", error);
+    return [];
+  }
+
+  return data;
+};
+
+export const getCriteriasByAreaId = async (areaId: number | null) => {
+  if (!areaId) return [];
+
+  const { data, error } = await supabase
+    .from("criteria")
+    .select("*")
+    .eq("area_id", areaId);
+
+  if (error) {
+    console.error("Error fetching criterias:", error);
+    return [];
+  }
+
+  return data;
 };

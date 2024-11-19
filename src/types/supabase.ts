@@ -106,6 +106,36 @@ export type Database = {
           },
         ]
       }
+      documentation_student: {
+        Row: {
+          documentation_id: number | null
+          student_id: number | null
+        }
+        Insert: {
+          documentation_id?: number | null
+          student_id?: number | null
+        }
+        Update: {
+          documentation_id?: number | null
+          student_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documentation_student_documentation_id_fkey"
+            columns: ["documentation_id"]
+            isOneToOne: false
+            referencedRelation: "documentations"
+            referencedColumns: ["documentation_id"]
+          },
+          {
+            foreignKeyName: "documentation_student_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["student_id"]
+          },
+        ]
+      }
       documentations: {
         Row: {
           created_at: string | null
@@ -175,6 +205,36 @@ export type Database = {
           },
         ]
       }
+      month_term: {
+        Row: {
+          month_id: number
+          term_id: number
+        }
+        Insert: {
+          month_id: number
+          term_id: number
+        }
+        Update: {
+          month_id?: number
+          term_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "month_term_junction_month_id_fkey"
+            columns: ["month_id"]
+            isOneToOne: false
+            referencedRelation: "months"
+            referencedColumns: ["month_id"]
+          },
+          {
+            foreignKeyName: "month_term_junction_term_id_fkey"
+            columns: ["term_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["term_id"]
+          },
+        ]
+      }
       months: {
         Row: {
           month_id: number
@@ -208,36 +268,26 @@ export type Database = {
       students: {
         Row: {
           birth_year: number | null
-          documentation_id: number | null
           first_name: string
-          school_id: number | null
+          preschool_id: number | null
           student_id: number
         }
         Insert: {
           birth_year?: number | null
-          documentation_id?: number | null
           first_name: string
-          school_id?: number | null
+          preschool_id?: number | null
           student_id?: never
         }
         Update: {
           birth_year?: number | null
-          documentation_id?: number | null
           first_name?: string
-          school_id?: number | null
+          preschool_id?: number | null
           student_id?: never
         }
         Relationships: [
           {
-            foreignKeyName: "students_documentation_id_fkey"
-            columns: ["documentation_id"]
-            isOneToOne: false
-            referencedRelation: "documentations"
-            referencedColumns: ["documentation_id"]
-          },
-          {
-            foreignKeyName: "students_school_id_fkey"
-            columns: ["school_id"]
+            foreignKeyName: "students_preschool_id_fkey"
+            columns: ["preschool_id"]
             isOneToOne: false
             referencedRelation: "preschools"
             referencedColumns: ["preschool_id"]
@@ -391,4 +441,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
