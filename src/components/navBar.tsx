@@ -34,6 +34,10 @@ const NavBar = () => {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
+          <ListItem
+            href="/Lägg till dokumentation"
+            title="Lägg till dokumentation"
+          ></ListItem>
           <NavigationMenuItem></NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
