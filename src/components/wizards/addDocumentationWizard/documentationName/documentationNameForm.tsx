@@ -1,43 +1,61 @@
-import Form from "@/components/forms/form";
-import Heading from "@/components/typography/headings";
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useDocumentationStore } from "@/store/documentations";
-import * as yup from "yup";
-
-export interface DocumentationNameFormFields {
-  documentationName: string;
-}
-
 type DocumentationNameFormProps = {
-  onSubmit: (fields: DocumentationNameFormFields) => void;
+  onSubmit: (name: string) => void;
 };
+
+const FormSchema = z.object({
+  name: z.string().nonempty("Ange ett namn på dokumentationen"),
+});
+
 const DocumentationNameForm = ({ onSubmit }: DocumentationNameFormProps) => {
   const documentationName = useDocumentationStore(
     (state) => state.documentationName
   );
-
-  const defaultValues: DocumentationNameFormFields = {
-    documentationName: documentationName,
-  };
-
-  const validationSchema = yup.object().shape({
-    documentationName: yup.string().required("Required"),
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      name: documentationName,
+    },
   });
 
-  const submit = ({ documentationName }: DocumentationNameFormFields) => {
-    console.log(documentationName);
-    onSubmit({ documentationName });
+  const submit = (data: z.infer<typeof FormSchema>) => {
+    onSubmit(data.name);
   };
+
   return (
-    <Form
-      defaultValues={defaultValues}
-      onSubmit={submit}
-      validationSchema={validationSchema}
-    >
-      <Heading.H3>Dokumentationens namn</Heading.H3>
-      <Input name="documentationName" placeholder="Namn" />
-      <Button type="submit">Nästa</Button>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(submit)} className="w-2/3 space-y-6">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Dokumentationens namn</FormLabel>
+              <FormControl>
+                <Input placeholder="Namn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
     </Form>
   );
 };
