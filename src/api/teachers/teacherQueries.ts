@@ -5,5 +5,6 @@ export const useTeachersQuery = (preschoolId: number = 2) => {
   return useQuery({
     queryKey: ["students", preschoolId],
     queryFn: () => getTeachersByPreschoolId(preschoolId),
+    staleTime: Infinity,
   });
 };

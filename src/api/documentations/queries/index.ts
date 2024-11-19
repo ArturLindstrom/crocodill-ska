@@ -1,13 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { DocumentationWithTeacher } from "@/types";
+import { supabase } from "../../supabaseClient";
 
 type GetDocumentationsByTermMonthAndDepartmentProps = {
   selectedTermId: string;
   selectedMonthId: string;
   selectedDepartments: number[];
 };
-
-import { DocumentationWithTeacher } from "@/types";
-import { supabase } from "../../supabaseClient";
 
 // Function to fetch documentations along with teacher's data based on term, month, and departments
 export const getDocumentationsByTermMonthAndDepartment = async ({
@@ -83,14 +81,6 @@ export const getAreas = async () => {
   return data;
 };
 
-export const useGetAreas = () => {
-  return useQuery({
-    queryKey: ["areas", "all"],
-    queryFn: getAreas,
-    staleTime: Infinity,
-  });
-};
-
 export const getCriteriasByAreaId = async (areaId: number | null) => {
   if (!areaId) return [];
 
@@ -105,13 +95,4 @@ export const getCriteriasByAreaId = async (areaId: number | null) => {
   }
 
   return data;
-};
-
-export const useGetCriteriasByAreaId = (areaId: number | null) => {
-  return useQuery({
-    queryKey: ["criterias", areaId],
-    queryFn: () => getCriteriasByAreaId(areaId),
-    enabled: !!areaId, // Only fetch when areaId is truthy
-    staleTime: Infinity,
-  });
 };
