@@ -1,6 +1,6 @@
 // Initialize Supabase client
 
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 
 export const getTeachersByPreschoolId = async (preschoolId: number) => {
   const { data, error } = await supabase

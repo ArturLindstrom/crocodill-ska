@@ -1,5 +1,5 @@
 import { Student } from "@/types";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 
 interface StudentsResponse {
   students: Student[];

@@ -1,6 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
 import { useDocumentationStore } from "@/store/documentations";
-import { DocumentationData } from "../types/documentation";
+import { DocumentationData } from "../../documentations/types/documentation";
 import { supabase } from "@/api/supabaseClient";
 import { DocumentationError, ERROR_MESSAGES } from "./errors";
 import { AreaWithCriteria } from "@/store/documentations/types/shared";
@@ -15,7 +14,7 @@ const validateInput = (data: DocumentationData): void => {
   }
 };
 
-const transformStoreDataToDocumentation = (
+export const transformStoreDataToDocumentation = (
   storeData: ReturnType<typeof useDocumentationStore.getState>
 ): DocumentationData => {
   const {
@@ -100,25 +99,4 @@ export const createDocumentation = async (data: DocumentationData) => {
     if (error instanceof DocumentationError) throw error;
     throw new DocumentationError(ERROR_MESSAGES.GENERAL_ERROR);
   }
-};
-
-export const useCreateDocumentation = () => {
-  const { resetForm, getDocumentationData } = useDocumentationStore();
-
-  return useMutation({
-    mutationFn: async () => {
-      const storeData = getDocumentationData();
-      const documentationData = transformStoreDataToDocumentation(storeData);
-      return createDocumentation(documentationData);
-    },
-    onSuccess: resetForm,
-    onError: (error) => {
-      console.error(
-        "Documentation error:",
-        error instanceof DocumentationError
-          ? error.message
-          : ERROR_MESSAGES.GENERAL_ERROR
-      );
-    },
-  });
 };

@@ -1,7 +1,7 @@
 import { Preschool, Department } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { getPreschoolAndDepartmentsById, getAllPreschools } from ".";
-import { getDocumentationsByPreschoolTermAndMonth } from "../documentations/queries";
+import { getDocumentationsByPreschoolTermAndMonth } from "../documentations";
 import { getTermsWithMonths } from "../terms";
 
 export const preschoolLoader = async (id: string) => {

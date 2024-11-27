@@ -17,7 +17,7 @@ import {
   SidebarFooter,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useAllPreschools } from "@/api/preschools/preschoolQueries";
+import { useAllPreschools } from "@/api/queries/preschools/usePreschoolQueries";
 import NavTools from "./nav-tools";
 
 // This is sample data.

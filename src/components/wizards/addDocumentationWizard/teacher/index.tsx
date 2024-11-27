@@ -1,4 +1,4 @@
-import { useTeachersQuery } from "@/api/teachers/teacherQueries";
+import { useTeachersQuery } from "@/api/queries/teachers/useTeacherQueries";
 import { useDocumentationStore } from "@/store/documentations";
 import AddTeacherForm from "./addTeacherForm";
 import Loader from "@/components/loader";
