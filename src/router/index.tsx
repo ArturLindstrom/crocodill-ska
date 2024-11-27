@@ -1,4 +1,3 @@
-import { getAllPreschools } from "@/api/preschools";
 import AddDocumentation from "@/routes/addDocumentation";
 import Preschool from "@/routes/preSchool";
 import Root from "@/routes/root";
@@ -8,13 +7,12 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    loader: getAllPreschools,
     children: [
       {
-        path: "förskolor/:id",
+        path: "preschool/:id",
         element: <Preschool />,
       },
-      { path: "Lägg till dokumentation", element: <AddDocumentation /> },
+      { path: "add-documentation", element: <AddDocumentation /> },
     ],
   },
 ]);
