@@ -40,7 +40,10 @@ const DocumentationNameForm = ({ onSubmit }: DocumentationNameFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submit)} className="w-2/3 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(submit)}
+        className="flex flex-col items-center space-y-6 text-center"
+      >
         <FormField
           control={form.control}
           name="name"
@@ -54,7 +57,7 @@ const DocumentationNameForm = ({ onSubmit }: DocumentationNameFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Nästa</Button>
       </form>
     </Form>
   );

@@ -43,13 +43,16 @@ const AddStudentsForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(submit)}
+        className="flex flex-col items-center space-y-6"
+      >
         <FormField
           control={form.control}
           name="students"
           render={() => (
             <FormItem>
-              <FormLabel>Välj studenter</FormLabel>
+              <FormLabel>Välj Barn</FormLabel>
               <div className="space-y-4">
                 {students.map((student) => (
                   <FormField
@@ -95,7 +98,7 @@ const AddStudentsForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Nästa</Button>
       </form>
     </Form>
   );

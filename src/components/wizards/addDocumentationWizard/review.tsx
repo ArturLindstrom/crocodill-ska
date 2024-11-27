@@ -2,44 +2,41 @@ import { useCreateDocumentation } from "@/api/documentations/mutations";
 import { Button } from "@/components/ui/button";
 import { useDocumentationStore } from "@/store/documentations";
 
-type AddReviewProps = {
-  nextStep: () => void;
-};
-
-const AddReview = ({ nextStep }: AddReviewProps) => {
+const AddReview = () => {
   const {
     documentationName,
     students,
     institution,
     selectedAreasWithCriteria,
     teacher,
+    resetForm,
   } = useDocumentationStore();
 
   const createDocumentation = useCreateDocumentation();
 
   const handleSubmit = () => {
     createDocumentation.mutate();
-    nextStep();
+    resetForm();
   };
 
   return (
     <div className="w-full max-w-2xl">
       <div className="p-8 bg-white border border-gray-200 rounded-lg shadow-md">
         <h2 className="mb-8 text-3xl font-bold text-center text-gray-800">
-          Documentation Review
+          Dokumentationsöversikt
         </h2>
 
         <div className="space-y-6">
           <div className="pb-4 border-b">
             <h3 className="mb-2 text-sm tracking-wider text-gray-600 uppercase">
-              Documentation Name
+              Dokumentationens namn
             </h3>
             <p className="text-xl text-gray-800">{documentationName}</p>
           </div>
 
           <div className="pb-4 border-b">
             <h3 className="mb-2 text-sm tracking-wider text-gray-600 uppercase">
-              Selected Students
+              Valda barn
             </h3>
             <ul className="grid grid-cols-2 gap-2">
               {students.map((student) => (
@@ -52,7 +49,7 @@ const AddReview = ({ nextStep }: AddReviewProps) => {
 
           <div className="pb-4 border-b">
             <h3 className="mb-2 text-sm tracking-wider text-gray-600 uppercase">
-              Areas and Criteria
+              Områden och mål
             </h3>
             {selectedAreasWithCriteria.map((area) => (
               <div key={area.areaId} className="mb-4">
@@ -75,18 +72,15 @@ const AddReview = ({ nextStep }: AddReviewProps) => {
           </div>
 
           <div className="pb-4 border-b">
-            <h3 className="mb-2 text-sm tracking-wider text-gray-600 uppercase">
-              Institution Details
-            </h3>
             <div className="space-y-1">
               <p className="text-gray-800">
-                Preschool:{" "}
+                Förskola:{" "}
                 <span className="text-gray-600">
                   {institution.preschoolName}
                 </span>
               </p>
               <p className="text-gray-800">
-                Department:{" "}
+                Avdelning:{" "}
                 <span className="text-gray-600">
                   {institution.departmentName}
                 </span>
@@ -102,8 +96,11 @@ const AddReview = ({ nextStep }: AddReviewProps) => {
           </div>
 
           <div className="flex justify-center pt-4">
-            <Button onClick={handleSubmit} className="px-8 py-2">
-              Create Documentation
+            <Button
+              onClick={handleSubmit}
+              className="px-8 py-2 bg-secondary text-primary"
+            >
+              Skapa dokumentation
             </Button>
           </div>
         </div>

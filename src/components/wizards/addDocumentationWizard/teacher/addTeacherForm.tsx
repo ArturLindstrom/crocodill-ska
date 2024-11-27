@@ -50,16 +50,19 @@ const AddTeacherForm = ({ teachers, onSubmit }: AddTeacherFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="flex flex-col items-center space-y-6"
+      >
         <FormField
           control={form.control}
           name="teacher"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Välj Lärare</FormLabel>
+              <FormLabel>Välj pedagog</FormLabel>
               <FormControl>
                 <Combobox
-                  placeholder="Lärare"
+                  placeholder="Pedagog"
                   options={teacherOptions}
                   value={field.value?.toString()}
                   onSelect={(value) => {

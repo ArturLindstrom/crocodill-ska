@@ -50,7 +50,7 @@ const AddCriterias = ({ nextStep }: AddCriteriasProps) => {
   const selectedArea = areas.find((area) => area.area_id === selectedAreaId);
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <AreaSelector areas={areas} onSubmit={selectArea} />
       {criteriasLoading && <Loader />}
       {selectedArea && (

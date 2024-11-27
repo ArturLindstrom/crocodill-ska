@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import AddDocumentationName from "./documentationName";
 import AddCriterias from "./criterias";
 import AddStudents from "./students";
@@ -6,7 +6,6 @@ import AddTeacher from "./teacher";
 import AddPreschool from "./preschool";
 import AddReview from "./review";
 import AddMonth from "./month";
-import { Button } from "@/components/ui/button";
 
 type WizardSwitchProps = {
   currentStep: number;
@@ -16,13 +15,7 @@ type WizardSwitchProps = {
   isLastStep: boolean;
 };
 
-const WizardSwitch = ({
-  currentStep,
-  handleNext,
-  handlePrevious,
-  isFirstStep,
-  isLastStep,
-}: WizardSwitchProps) => {
+const WizardSwitch = ({ currentStep, handleNext }: WizardSwitchProps) => {
   const renderSwitch = () => {
     switch (currentStep) {
       case 1:
@@ -38,23 +31,15 @@ const WizardSwitch = ({
       case 6:
         return <AddPreschool nextStep={handleNext} />;
       case 7:
-        return <AddReview nextStep={handleNext} />;
+        return <AddReview />;
       default:
         return <></>;
     }
   };
 
   return (
-    <Card className="flex flex-col items-center p-20">
-      <div className="flex justify-between w-full mt-4">
-        <Button onClick={handlePrevious} disabled={isFirstStep}>
-          Previous
-        </Button>
-        {renderSwitch()}
-        <Button onClick={handleNext} disabled={isLastStep}>
-          Next
-        </Button>
-      </div>
+    <Card className="flex flex-col items-center p-20 m-10">
+      <CardContent>{renderSwitch()}</CardContent>
     </Card>
   );
 };
