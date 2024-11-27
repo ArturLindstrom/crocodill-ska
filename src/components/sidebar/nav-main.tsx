@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -39,7 +38,6 @@ type NavMainProps = {
 export function NavMain({ items, preschools, isLoading, error }: NavMainProps) {
   return (
     <SidebarGroup>
-      <SidebarHeader>Crocodill SKA</SidebarHeader>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
