@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/sidebar/nav-main";
-import { NavProjects } from "@/components/sidebar/nav-projects";
 import { NavUser } from "@/components/sidebar/nav-user";
 import {
   Sidebar,
@@ -19,6 +18,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { useAllPreschools } from "@/api/preschools/preschoolQueries";
+import NavTools from "./nav-tools";
 
 // This is sample data.
 const data = {
@@ -91,7 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           isLoading={isLoading}
           error={error}
         />
-        <NavProjects projects={data.tools} />
+        <NavTools tools={data.tools} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
