@@ -30,8 +30,6 @@ const AddMonth = ({ nextStep }: AddMonthProps) => {
     nextStep();
   };
 
-  console.log("data", data?.data);
-
   if (isLoading) {
     return <Loader />;
   }
@@ -42,11 +40,7 @@ const AddMonth = ({ nextStep }: AddMonthProps) => {
     return <div>No terms found</div>;
   }
 
-  return (
-    <div>
-      <AddMonthForm onSubmit={handleSubmit} terms={data.data} />
-    </div>
-  );
+  return <AddMonthForm onSubmit={handleSubmit} terms={data.data} />;
 };
 
 export default AddMonth;

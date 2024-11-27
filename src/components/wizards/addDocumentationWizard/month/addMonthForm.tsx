@@ -81,7 +81,10 @@ const AddMonthForm = ({ terms, onSubmit }: AddMonthFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="flex flex-col items-center space-y-6 "
+      >
         <FormField
           control={form.control}
           name="term"

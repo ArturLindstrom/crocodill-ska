@@ -50,7 +50,10 @@ const AddCriteriasForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(submit)}
+        className="flex flex-col items-center space-y-6"
+      >
         <FormField
           control={form.control}
           name="selectedCriterias"
