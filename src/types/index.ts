@@ -11,16 +11,7 @@ export type Month = {
 export type Preschool = Database["public"]["Tables"]["preschools"]["Row"];
 export type Student = Database["public"]["Tables"]["students"]["Row"];
 export type Teacher = Database["public"]["Tables"]["teachers"]["Row"];
-export type Term = {
-  term_id: number;
-  term_name: string | null;
-  month_term: {
-    months: {
-      month_id: number;
-      month_name: string | null;
-    } | null;
-  }[];
-};
+export type Term = Database["public"]["Tables"]["terms"]["Row"];
 export type Documentation =
   Database["public"]["Tables"]["documentations"]["Row"];
 export type Area = Database["public"]["Tables"]["areas"]["Row"];
