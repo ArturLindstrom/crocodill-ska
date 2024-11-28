@@ -15,9 +15,9 @@ const BaseLayout = ({ children }: LayoutProps) => {
       <AppSidebar />
       <SidebarInset className="flex flex-col items-center">
         <SidebarTrigger className="self-start m-4" />
-        <div className="flex flex-col items-center w-full px-4 ">
+        <main className="flex flex-col items-center w-full px-16 ">
           {children}
-        </div>
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );

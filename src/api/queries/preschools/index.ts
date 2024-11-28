@@ -11,16 +11,19 @@ export const getAllPreschools = async () => {
 };
 
 export const getPreschoolAndDepartmentsById = async (preschoolId: string) => {
-  const { data: preschool, error: preschoolError } = await supabase
+  const { data, error } = await supabase
     .from("preschools")
-    .select()
+    .select(
+      `
+      *,
+      teachers (
+        *,
+        department:departments!inner (*)
+      )
+    `
+    )
     .eq("preschool_id", preschoolId)
     .single();
 
-  const { data: departments, error: departmentsError } = await supabase
-    .from("departments")
-    .select()
-    .eq("preschool_id", preschoolId);
-
-  return { preschool, departments, preschoolError, departmentsError };
+  return { data, error };
 };
