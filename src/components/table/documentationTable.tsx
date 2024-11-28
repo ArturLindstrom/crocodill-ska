@@ -23,9 +23,9 @@ const DocumentationTable = ({ documentations }: DocumentationTableProps) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">Dokumentation</TableHead>
-              <TableHead className="text-center">Datum</TableHead>
-              <TableHead className="text-center">Pedagog</TableHead>
+              <TableHead>Dokumentation</TableHead>
+              <TableHead>Datum</TableHead>
+              <TableHead>Pedagog</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
