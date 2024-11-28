@@ -1,6 +1,6 @@
 import { useDocumentationStore } from "@/store/documentations";
 import AddStudentsForm from "./addStudentsForm";
-import { useStudentsQuery } from "@/api/students/studentQueries";
+import { useStudentsQuery } from "@/api/queries/students/useStudentQueries";
 import Loader from "@/components/loader";
 
 type AddStudentsProps = {

@@ -1,4 +1,4 @@
-import { useCreateDocumentation } from "@/api/documentations/mutations";
+import { useCreateDocumentation } from "@/api/mutations/documentations/useCreateDocumentation";
 import { Button } from "@/components/ui/button";
 import { useDocumentationStore } from "@/store/documentations";
 

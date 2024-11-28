@@ -1,7 +1,7 @@
 import { useDocumentationStore } from "@/store/documentations";
 import Loader from "@/components/loader";
 import AddMonthForm from "./addMonthForm";
-import { useGetTermsWithMonths } from "@/api/terms/termQueries";
+import { useGetTermsWithMonths } from "@/api/queries/terms/useTermQueries";
 
 type AddMonthProps = {
   nextStep: () => void;

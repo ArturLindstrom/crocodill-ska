@@ -3,10 +3,8 @@ import Loader from "@/components/loader";
 import AreaSelector from "./areaSelector";
 import { useState } from "react";
 import { useDocumentationStore } from "@/store/documentations";
-import {
-  useGetAreas,
-  useGetCriteriasByAreaId,
-} from "@/api/documentations/queries/hooks";
+import { useGetAreas } from "@/api/queries/areas/useAreaQueries";
+import { useGetCriteriasByAreaId } from "@/api/queries/criteria/useCriteriaQueries";
 
 type AddCriteriasProps = {
   nextStep: () => void;

@@ -3,7 +3,7 @@ import { Department, DocumentationWithTeacher, Month, Term } from "@/types";
 import CheckboxWithText from "@/components/checkbox";
 import Combobox from "@/components/comboBox";
 import { transformMonths, transformTerms } from "@/helpers";
-import { getDocumentationsByTermMonthAndDepartment } from "@/api/documentations/queries";
+import { getDocumentationsByTermMonthAndDepartment } from "@/api/queries/documentations";
 import { Button } from "../ui/button";
 import * as yup from "yup";
 import { useLocation } from "react-router-dom";
@@ -39,7 +39,7 @@ const PreschoolDataForm = ({
     setSelectedTermId(null);
     setSelectedMonthId(null);
     setSelectedDepartments([]);
-    setError(null); // Clear any errors if necessary
+    setError(null);
   }, [location.pathname]);
 
   const transformedMonths = transformMonths(months);
@@ -66,7 +66,6 @@ const PreschoolDataForm = ({
 
   const fetchData = async () => {
     try {
-      // Validate selections
       await validationSchema.validate(
         {
           selectedTermId,
@@ -76,10 +75,8 @@ const PreschoolDataForm = ({
         { abortEarly: false }
       );
 
-      // Clear any previous errors
       setError(null);
 
-      // Fetch data
       const data = await getDocumentationsByTermMonthAndDepartment({
         selectedTermId: selectedTermId!,
         selectedMonthId: selectedMonthId!,

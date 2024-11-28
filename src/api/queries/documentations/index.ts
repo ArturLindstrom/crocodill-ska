@@ -1,5 +1,5 @@
+import { supabase } from "@/api/supabaseClient";
 import { DocumentationWithTeacher } from "@/types";
-import { supabase } from "../../supabaseClient";
 
 type GetDocumentationsByTermMonthAndDepartmentProps = {
   selectedTermId: string;
@@ -7,7 +7,6 @@ type GetDocumentationsByTermMonthAndDepartmentProps = {
   selectedDepartments: number[];
 };
 
-// Function to fetch documentations along with teacher's data based on term, month, and departments
 export const getDocumentationsByTermMonthAndDepartment = async ({
   selectedTermId,
   selectedMonthId,
@@ -16,7 +15,7 @@ export const getDocumentationsByTermMonthAndDepartment = async ({
   DocumentationWithTeacher[]
 > => {
   const { data, error } = await supabase
-    .from("documentations") // No need to pass the type here
+    .from("documentations")
     .select(
       `
       *,
@@ -32,13 +31,12 @@ export const getDocumentationsByTermMonthAndDepartment = async ({
     return [];
   }
   console.log("data", data);
-  // Return the data as it includes the 'teachers' relationship directly
-  return data as DocumentationWithTeacher[]; // Cast here to ensure the correct return type
+  return data as DocumentationWithTeacher[];
 };
 
 type getDocumentationsByTermAndPreschoolProps = {
-  termId: string; // ID of the selected term
-  preschoolId: string; // ID of the selected preschool
+  termId: string;
+  preschoolId: string;
 };
 
 export const getDocumentationsByPreschoolTermAndMonth = async ({
@@ -47,52 +45,23 @@ export const getDocumentationsByPreschoolTermAndMonth = async ({
 }: getDocumentationsByTermAndPreschoolProps) => {
   const { data: documentations, error } = await supabase
     .from("documentations")
-    .select("*, teachers(name), months(month_name)", { count: "exact" }) // Joining with months table
-    .eq("term_id", termId) // Filter by term_id
-    .eq("preschool_id", preschoolId); // Filter by preschool_id
+    .select("*, teachers(name), months(month_name)", { count: "exact" })
+    .eq("term_id", termId)
+    .eq("preschool_id", preschoolId);
 
   if (error) {
     console.error("Error fetching documentations:", error);
     return { documentations: null, countByMonth: null, error };
   }
 
-  // Count documentations by month name
   const countByMonth: { [key: string]: number } = documentations.reduce(
     (acc, doc) => {
-      // Check if `months` and `month_name` exist before accessing
       const monthName = doc.months?.month_name || "Unknown";
-      acc[monthName] = (acc[monthName] || 0) + 1; // Increment count for the month
+      acc[monthName] = (acc[monthName] || 0) + 1;
       return acc;
     },
     {} as { [key: string]: number }
   );
 
   return { documentations, countByMonth, error: null };
-};
-
-export const getAreas = async () => {
-  const { data, error } = await supabase.from("areas").select("*");
-
-  if (error) {
-    console.error("Error fetching areas:", error);
-    return [];
-  }
-
-  return data;
-};
-
-export const getCriteriasByAreaId = async (areaId: number | null) => {
-  if (!areaId) return [];
-
-  const { data, error } = await supabase
-    .from("criteria")
-    .select("*")
-    .eq("area_id", areaId);
-
-  if (error) {
-    console.error("Error fetching criterias:", error);
-    return [];
-  }
-
-  return data;
 };
